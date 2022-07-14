@@ -26,11 +26,6 @@ pipeline {
                 sh 'mvn test'
             }
         }
-	stage('Deploy To Environment') {
-            steps {
-                sh 'echo Deployment Done'
-            }
-        }
 	stage("build & SonarQube analysis") {
             steps {
               withSonarQubeEnv('MySonar') {
@@ -46,5 +41,10 @@ pipeline {
               }
             }
           }
+	  stage('Deploy To Environment') {
+            steps {
+                sh 'echo Deployment Done'
+            }
+        }
     }
 }

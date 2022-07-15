@@ -29,7 +29,6 @@ pipeline {
 	stage("build & SonarQube analysis") {
             steps {
               withSonarQubeEnv('MySonar'){
-          	sh 'mvn clean package sonar:sonar'
 		sh 'mvn verify sonar:sonar -Dsonar.projectKey=kalyanee-sonar -Dsonar.login=060067941ec0e0fa44f6a9654780776b6a2e307e -Dsonar.host.url=https://sonarcloud.io/'
 		}
             }

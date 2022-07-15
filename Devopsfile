@@ -7,8 +7,8 @@ pipeline {
         stage('Git Checkout') {
             steps {
                 git branch: 'main',
-		credentialsId: '927a0ea4-bde7-4a1e-a590-f0b87f0d7c40',
-		url: 'https://github.com/cloudtechner/testrepo.git'
+		credentialsId: '6206ef0d-ec37-41d9-9390-2fe8ac30d231',
+		url: 'https://github.com/KalyaneeMehare/testrepo.git'
             }
         }    
         stage('Compile') {
@@ -26,6 +26,13 @@ pipeline {
                 sh 'mvn test'
             }
         }
+	stage("build & SonarQube analysis") {
+            steps {
+              withSonarQubeEnv('MySonar'){
+          	sh 'mvn clean package sonar:sonar'
+		sh 'mvn verify sonar:sonar -Dsonar.projectKey=kalyanee-sonar -Dsonar.login=060067941ec0e0fa44f6a9654780776b6a2e307e -Dsonar.host.url=https://sonarcloud.io/'
+            }
+          }
 	stage('Deploy To Environment') {
             steps {
                 sh 'echo Deployment Done'

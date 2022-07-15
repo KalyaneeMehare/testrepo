@@ -29,9 +29,8 @@ pipeline {
 	stage("build & SonarQube analysis") {
             steps {
               withSonarQubeEnv('MySonar'){
-                sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
-		sh 'mvn clean package sonar:sonar'
-		sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=sonar-pro -Dsonar.login=05675ebb44b8df540c7d359ee8378360c141b196'
+          	sh 'mvn clean package sonar:sonar'
+		sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar -Dsonar.projectKey=sonar-pro -Dsonar.login=05675ebb44b8df540c7d359ee8378360c141b196'
               }
             }
           }

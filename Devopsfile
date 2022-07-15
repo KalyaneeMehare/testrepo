@@ -34,24 +34,23 @@ pipeline {
 		}
             }
           }
-	   stage("Quality Gate") {
-            steps {
-              timeout(time: 1, unit: 'HOURS') {
-                waitForQualityGate abortPipeline: true
+	  stage("Quality Gate") {
+             steps {
+               timeout(time: 1, unit: 'HOURS') {
+                 waitForQualityGate abortPipeline: true
               }
             }
           }
-	   stage("Env Variables") {
+	  stage("Env Variables") {
             steps {
                 echo "The build number is ${env.BUILD_NUMBER}"
                 echo "You can also use \${BUILD_NUMBER} -> ${BUILD_NUMBER}"
                 sh 'echo "I can access $BUILD_NUMBER in shell command as well."'
 		}
 	     }
-        }
-	stage('Deploy To Environment') {
-            steps {
-                sh 'echo Deployment Done'
+	     stage('Deploy To Environment') {
+                steps {
+                 sh 'echo Deployment Done'
             }
         }
     }

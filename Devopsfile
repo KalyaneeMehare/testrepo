@@ -33,7 +33,14 @@ pipeline {
 		}
             }
           }
-	stage('Deploy To Environment') {
+	   stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
+	  stage('Deploy To Environment') {
             steps {
                 sh 'echo Deployment Done'
             }

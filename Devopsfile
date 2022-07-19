@@ -1,58 +1,15 @@
 pipeline {
-    agent any
-    tools {
-    	maven 'My_Maven'
-	}
+    agent any 
+    parameters{string(description: 'please enter tag number:', name: 'tag_number')}
+ 
     stages {
-        stage('Git Checkout') {
+        stage('deployment on another server') {
             steps {
-                git branch: 'main',
-		credentialsId: '6206ef0d-ec37-41d9-9390-2fe8ac30d231',
-		url: 'https://github.com/KalyaneeMehare/testrepo.git'
-            }
-        }    
-        stage('Compile') {
-            steps {
-                sh 'mvn clean install'
-            }
-        }
-        stage('Package') {
-            steps {
-                sh 'mvn package'
-            }
-        }
-        stage('Unit Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-	stage("build & SonarQube analysis") {
-            steps {
-              withSonarQubeEnv('MySonar'){
-		sh 'mvn verify sonar:sonar -Dsonar.projectKey=kalyanee-sonar -Dsonar.login=060067941ec0e0fa44f6a9654780776b6a2e307e -Dsonar.host.url=https://sonarcloud.io/'
-		sh 'sleep 60'
-		}
-            }
-          }
-	  stage("Quality Gate") {
-             steps {
-               timeout(time: 1, unit: 'HOURS') {
-                 waitForQualityGate abortPipeline: true
-              }
-            }
-          }
-	 
-	  stage("renaming-the-jar-and-backing-up-the-jar") {
-            steps {
-        	sh 'sudo mkdir -p /opt/backup'
-       	        sh 'sudo mv target/my-app-1.0-SNAPSHOT.jar target/java-jar.${BUILD_NUMBER}.jar'
-                sh 'sudo cp target/java-jar.${BUILD_NUMBER}.jar /opt/backup/'
-           
-		}
-	     }
-	     stage('Deploy To Environment') {
-                steps {
-                 sh 'echo Deployment Done'
+                echo "$tag_number"
+                sshagent(['mannually-added']) {
+                sh 'scp -o StrictHostKeyChecking=no /opt/backup/1.0.$tag_number.jar ubuntu@172.31.9.130:~'
+                sh 'ssh -o StrictHostKeyChecking=no ubuntu@172.31.9.130 nohup java -jar /home/ubuntu/1.0.$tag_number.jar &'
+                }
             }
         }
     }

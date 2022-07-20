@@ -37,5 +37,5 @@ jobs:
     - name: Unit Test
       run: mvn test
     - name: build & SonarQube analysis
-      run: mvn verify sonar:sonar -Dsonar.projectKey=githuba-sonar -Dsonar.host.url=https://sonarcloud.io/ -Dsonar.login=c9eaf70a7d15b874920a49d2d9fd2e19376e3665
+      run: mvn verify sonar:sonar -Dsonar.projectKey=githuba-sonar -Dsonar.host.url=https://sonarcloud.io/ -Dsonar.login=${{ secrets.SONAR_TOKEN }}
      

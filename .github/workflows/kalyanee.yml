@@ -28,6 +28,7 @@ jobs:
       run: mvn clean install
     - name: Package
       run: mvn package
+      
     - name: Unit Test
       run: mvn test
     - name: build & SonarQube analysis

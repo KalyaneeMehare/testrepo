@@ -9,6 +9,11 @@ on:
   pull_request:
     branches: [ "master" ]
   workflow_dispatch:
+  
+env:
+    GITHUB_TOKEN: ${{ secrets.GITHUBACTION_TOKEN }}
+    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
 
 jobs:
   build:
@@ -33,6 +38,4 @@ jobs:
       run: mvn test
     - name: build & SonarQube analysis
       run: mvn verify sonar:sonar -Dsonar.projectKey=githuba-sonar -Dsonar.host.url=https://sonarcloud.io/     
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUBACTION_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+     

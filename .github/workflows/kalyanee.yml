@@ -36,6 +36,14 @@ jobs:
       
     - name: Unit Test
       run: mvn test
+    - name: List current directory
+      run: ls -la
+
+    - name: target folder content
+      run: |
+        cd target
+        ls -la
+        
     - name: build & SonarQube analysis
       run: mvn verify sonar:sonar -Dsonar.projectKey=githuba-sonar -Dsonar.host.url=https://sonarcloud.io/ -Dsonar.login=${{ secrets.SONAR_TOKEN }}
      

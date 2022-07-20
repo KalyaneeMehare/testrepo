@@ -31,7 +31,7 @@ jobs:
     - name: Unit Test
       run: mvn test
     - name: build & SonarQube analysis
-      run: mvn verify sonar:sonar -Dsonar.projectKey=sonar-pro1  -Dsonar.host.url=https://sonarcloud.io/
+      run: mvn verify sonar:sonar -Dsonar.projectKey=githuba-sonar  -Dsonar.host.url=https://sonarcloud.io/
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUBACTION_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

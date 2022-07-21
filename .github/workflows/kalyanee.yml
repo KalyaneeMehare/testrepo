@@ -46,4 +46,8 @@ jobs:
         
     - name: build & SonarQube analysis
       run: mvn verify sonar:sonar -Dsonar.projectKey=githuba-sonar -Dsonar.host.url=https://sonarcloud.io/ -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-     
+    
+    - name: Install SSH Key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_PRIVATE_KEY }} 

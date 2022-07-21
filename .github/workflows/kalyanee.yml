@@ -37,7 +37,9 @@ jobs:
     - name: Unit Test
       run: mvn test
     - name: List current directory
-      run: ls -la
+      run: |
+        pwd
+        ls -la
 
     - name: target folder content
       run: |
